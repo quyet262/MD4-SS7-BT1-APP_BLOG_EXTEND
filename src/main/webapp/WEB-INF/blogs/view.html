@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout :: head">
+    <title>DeleteCustomer</title>
+</head>
+<body>
+<h3>View Customer</h3>
+<p>
+    <a th:href="@{/WEB-INF/views/blogs}">
+        Back to customer list
+    </a>
+</p>
+
+<div>
+    <label>Title: </label>
+    <label th:text="${blog.getTitle()}"></label>
+</div>
+<div>
+    <label>Content: </label>
+    <label th:text="${blog.getContent()}"></label>
+</div>
+<div>
+    <label>Description: </label>
+    <label th:text="${blog.getDescription()}"></label>
+</div>
+<div>
+    <label>Author: </label>
+    <label th:text="${blog.getAuthor()}"></label>
+</div>
+
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>

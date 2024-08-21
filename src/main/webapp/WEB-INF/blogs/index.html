@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/blogs/layout::head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>List Blogs</h3>
+<p>
+    <a th:href="@{/blogs/create}">
+        Create New blogs
+    </a>
+</p>
+<div style="margin-bottom: 10px; margin-left: 110px">
+    <form th:action="@{/blogs/search}" method="get">
+        <label><input type="text" name="search" th:value="${search}" placeholder="Tìm kiếm..."></label>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
+<div id="notify">
+    <div th:if="${success}">
+        <span th:text="${success}"></span>
+    </div>
+</div>
+<table id="blogs">
+    <thead>
+    <tr>
+        <th>Title: </th>
+        <th>Description:</th>
+        <th>Author: </th>
+        <th>Date: </th>
+        <th>Category: </th>
+        <th>Edit: </th>
+        <th>Delete: </th>
+        <th>View: </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="b,bStatus: ${blogs}">
+        <td th:text="${b.title}"></td>
+        <td th:text="${b.description}"></td>
+        <td th:text="${b.author}"></td>
+        <td th:text="${b.date}"></td>
+        <td th:text="${b.getCategory().getName()}"></td>
+        <td><a th:href="@{/blogs/{id}/edit(id=${b.id})}">Edit</a> </td>
+        <td><a th:href="@{/blogs/{id}/delete(id=${b.id})}">Delete</a> </td>
+        <td><a th:href="@{/blogs/{id}/view(id=${b.id})}">View</a> </td>
+    </tr>
+    </tbody>
+</table>
+<div>
+    <a class="btn btn-primary" th:if="${blogs.hasPrevious()}"
+       th:href="@{/blogs/search(page=${blogs.number - 1}, search=${search})}">Previous</a>
+    <span th:text="${blogs.number + 1}"></span> | <span th:text="${blogs.totalPages}"></span>
+    <a class="btn btn-primary" th:if="${blogs.hasNext()}"
+       th:href="@{/blogs/search(page=${blogs.number + 1},  search=${search})}">Next</a>
+</div>
+<footer th:replace="/blogs/layout::footer"></footer>
+</body>
+</html>
