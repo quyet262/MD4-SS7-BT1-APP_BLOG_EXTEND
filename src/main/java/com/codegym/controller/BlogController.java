@@ -7,7 +7,9 @@ import com.codegym.service.IBlogService;
 import com.codegym.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
@@ -32,17 +34,24 @@ public class BlogController {
         return categoryService.findAll();
     }
 
+
+
     @GetMapping("")
-    public ModelAndView findAll(@PageableDefault(value = 5) Pageable pageable) {
+    public ModelAndView findAll(@RequestParam(defaultValue = "0") int page) {
+        Pageable pageable = PageRequest.of(page, 5,Sort.by("date").descending()
+                .and(Sort.by("title").ascending()));
         ModelAndView modelAndView = new ModelAndView("/blogs/index");
         Page<Blog> blogs = blogService.findAll(pageable);
         modelAndView.addObject("blogs", blogs);
         return modelAndView;
     }
 
+
     @GetMapping("/search")
     public ModelAndView search(@RequestParam("search") Optional<String> search,
-                               @PageableDefault(value = 5) Pageable pageable) {
+                               @RequestParam(defaultValue = "0") int page) {
+        Pageable pageable = PageRequest.of(page, 5,Sort.by("date").descending()
+                .and(Sort.by("title").ascending()));
         Page<Blog> blogs;
         if (search.isPresent()) {
             blogs = blogService.findAllByTitleContaining(pageable, search.get());
@@ -99,6 +108,13 @@ public class BlogController {
     public String delete(@ModelAttribute("blog") Blog blog) {
         blogService.remove(blog.getId());
         return "redirect:/blogs";
+}
+@GetMapping("/{id}/view")
+    public ModelAndView viewForm(@PathVariable Long id) {
+        Optional<Blog> blog = blogService.findById(id);
+        ModelAndView modelAndView = new ModelAndView("/blogs/view");
+        modelAndView.addObject("blog",blog.get());
+        return modelAndView;
 }
 
 

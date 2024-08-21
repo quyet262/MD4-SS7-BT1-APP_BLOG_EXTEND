@@ -1,33 +1,35 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head th:replace="/layout :: head">
-    <title>DeleteCustomer</title>
+<head th:replace="/blogs/layout :: head">
+    <title>View Blog</title>
 </head>
 <body>
-<h3>View Customer</h3>
+<h1 th:text="${blog.getTitle()}"></h1>
 <p>
-    <a th:href="@{/WEB-INF/views/blogs}">
-        Back to customer list
+    <a th:href="@{/blogs}">
+        Back to blog list
     </a>
 </p>
-
-<div>
-    <label>Title: </label>
-    <label th:text="${blog.getTitle()}"></label>
-</div>
-<div>
-    <label>Content: </label>
-    <label th:text="${blog.getContent()}"></label>
-</div>
-<div>
-    <label>Description: </label>
-    <label th:text="${blog.getDescription()}"></label>
-</div>
+<div id="form" style="width: auto"t>
 <div>
     <label>Author: </label>
     <label th:text="${blog.getAuthor()}"></label>
 </div>
+<div>
+    <label>Date: </label>
+    <label th:text="${blog.getDate()}"></label>
+</div>
+<div>
+    <label>Category: </label>
+    <label th:text="${blog.getCategory().getName()}"></label>
+</div>
+<br>
+<br>
+</div>
+<div>
+    <label th:text="${blog.getContent()}"></label>
+</div>
 
-<footer th:replace="/layout :: footer"></footer>
+<footer th:replace="/blogs/layout :: footer"></footer>
 </body>
 </html>

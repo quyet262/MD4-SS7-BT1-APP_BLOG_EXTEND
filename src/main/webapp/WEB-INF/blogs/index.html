@@ -11,6 +11,9 @@
         Create New blogs
     </a>
 </p>
+<div>
+    <a th:href="@{/categories}">Categories</a>
+</div>
 <div style="margin-bottom: 10px; margin-left: 110px">
     <form th:action="@{/blogs/search}" method="get">
         <label><input type="text" name="search" th:value="${search}" placeholder="Tìm kiếm..."></label>
@@ -42,9 +45,10 @@
         <td th:text="${b.author}"></td>
         <td th:text="${b.date}"></td>
         <td th:text="${b.getCategory().getName()}"></td>
+        <td><a th:href="@{/blogs/{id}/view(id=${b.id})}">Read Blog</a> </td>
         <td><a th:href="@{/blogs/{id}/edit(id=${b.id})}">Edit</a> </td>
         <td><a th:href="@{/blogs/{id}/delete(id=${b.id})}">Delete</a> </td>
-        <td><a th:href="@{/blogs/{id}/view(id=${b.id})}">View</a> </td>
+
     </tr>
     </tbody>
 </table>
